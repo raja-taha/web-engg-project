@@ -17,14 +17,13 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo '<div class="conferences">';
-        echo "ID: " . $row["id"] . "<br>";
-        echo "Title:" . $row["title"] . "<br>";
-        echo "Work Produced: " . $row["work"] . "<br>";
-        echo "Date: " . $row["date"] . "<br>";
+        echo "<b>Title: </b>" . $row["title"] . "<br>";
+        echo "<b>Work Produced: </b>" . $row["work"] . "<br>";
+        echo "<b>Date: </b>" . $row["date"] . "<br>";
         echo '</div>';
     }
 } else {
-    echo "0 results";
+    echo "<p style='margin: 1rem; color: white;'>0 results</p>";
 }
 
 $conn->close();

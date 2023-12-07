@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Perform your authentication logic
         if ($username === "taha" && $password === "taha") {
-            $_SESSION["userType"] = "admin";
+            $_SESSION["userType"] = "Admin";
             $response["success"] = true;
 
             // Redirect to index.php on successful login
@@ -35,16 +35,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="./styles/login.css">
 </head>
 
 <body>
     <!-- Login Form -->
     <div id="login-form">
         <h1>Login as Admin</h1>
-        <?php if (isset($_SESSION["userType"]) && $_SESSION["userType"] === "admin") : ?>
-            <p style="color: green;">You are already logged in as Admin.</p>
+        <?php if (isset($_SESSION["userType"]) && $_SESSION["userType"] === "Admin") : ?>
+            <?php
+            // Perform automatic logout for admin user
+            $_SESSION["userType"] = "User";
+            header("Location: index.php");
+            exit();
+            ?>
         <?php elseif (isset($response["message"])) : ?>
-            <p style="color: red;"><?php echo $response["message"]; ?></p>
+            <p><?php echo $response["message"]; ?></p>
         <?php endif; ?>
         <form method="post" action="">
             <div>
@@ -56,7 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" name="password" id="password" placeholder="Password" required />
             </div>
 
-            <input type="submit" value="Submit" />
+            <div id="buttons">
+                <button type="submit" id="submit">Submit</button>
+
+                <button id="cancel" onclick="window.location.href='./index.php'">Cancel</button>
+            </div>
+
         </form>
     </div>
 </body>
